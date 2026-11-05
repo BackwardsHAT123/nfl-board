@@ -1,20 +1,20 @@
 <title>NFL Best Bets Board</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: verdict, then ranked plays as cards, then supporting tables. One accent (yard-line blue); green/amber only for state. */
-:root{--bg:#f3f5f7;--panel:#ffffff;--fg:#14202b;--muted:#5b6b7a;--line:#d9e0e6;--accent:#1d5fa8;--accent-soft:#e3edf8;--warn:#9a5b00;--warn-soft:#fbefd9;--pos:#1f7a4d;--neg:#b3382c;
---disp:'Barlow Semi Condensed','Arial Narrow',sans-serif;--body:'IBM Plex Sans',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151c;--panel:#16202a;--fg:#e6edf3;--muted:#92a3b3;--line:#27343f;--accent:#6aa9ea;--accent-soft:#17283a;--warn:#e0a954;--warn-soft:#2c2415;--pos:#58c08a;--neg:#ee7d70;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e151c;--panel:#16202a;--fg:#e6edf3;--muted:#92a3b3;--line:#27343f;--accent:#6aa9ea;--accent-soft:#17283a;--warn:#e0a954;--warn-soft:#2c2415;--pos:#58c08a;--neg:#ee7d70;color-scheme:dark}
+/* TAH palette (dark-first; light when the OS prefers light). One loud colour (orange accent); green/amber/red only for state. Tokens: TAH design system. */
+:root{--bg:#262524;--panel:#1c1a17;--fg:#f2eee8;--muted:#b3b2ae;--line:#3a3733;--accent:#ed7437;--accent-soft:#3a2418;--warn:#eaa945;--warn-soft:#2e2412;--pos:#79bc76;--neg:#ea6275;
+--disp:'Outfit','Avenir Next',system-ui,sans-serif;--body:'Outfit','Avenir Next',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;--r-md:12px;--r-pill:999px;color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f2eee8;--panel:#fbf9f5;--fg:#121310;--muted:#5a574e;--line:#d9d3c8;--accent:#a8420f;--accent-soft:#f6e1d3;--warn:#7a4f00;--warn-soft:#f6e6c8;--pos:#38763a;--neg:#b3263d;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f2eee8;--panel:#fbf9f5;--fg:#121310;--muted:#5a574e;--line:#d9d3c8;--accent:#a8420f;--accent-soft:#f6e1d3;--warn:#7a4f00;--warn-soft:#f6e6c8;--pos:#38763a;--neg:#b3263d;color-scheme:light}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);padding-inline:16px;padding-block:20px 32px;line-height:1.45}
 .wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
 h1{font-family:var(--disp);font-weight:700;font-size:2rem;margin:0;text-wrap:balance}
-h2{font-family:var(--disp);font-size:1.3rem;margin:0 0 8px}
+h2{font-family:var(--disp);font-weight:600;font-size:1.3rem;margin:0 0 8px}
 .sub{color:var(--muted);margin:2px 0 0}
-.verdict{background:var(--warn-soft);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;gap:4px}
+.verdict{background:var(--warn-soft);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 16px;display:grid;gap:4px}
 .verdict b{font-family:var(--disp);font-size:1.25rem;color:var(--warn)}
 .plays{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px}
-.play{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px;display:grid;gap:12px;min-width:0;position:relative}
+.play{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:14px;display:grid;gap:12px;min-width:0;position:relative}
 .rank{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
 .legsbox{display:grid;gap:8px}
 .leg{display:flex;flex-direction:column;border-left:3px solid var(--accent);padding-left:10px}
@@ -22,7 +22,7 @@ h2{font-family:var(--disp);font-size:1.3rem;margin:0 0 8px}
 dl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0} dt{font-size:.72rem;color:var(--muted);line-height:1.2}
 dd{margin:2px 0 0;font-family:var(--mono);font-size:1.05rem;font-variant-numeric:tabular-nums}
 .pos{color:var(--pos)} .neg{color:var(--neg)}
-.tablebox{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow-x:auto}
+.tablebox{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:.9rem} .wide{min-width:1000px;table-layout:fixed} .mv{color:var(--warn);font-weight:500} td.mvcol span{font-size:.82rem}
 th{font-family:var(--mono);font-weight:500;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
 .wide th{white-space:normal}
@@ -31,18 +31,18 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 td.mvcol{white-space:normal} td.act{white-space:normal}
 td.fav b,td.fav span{display:block;font-weight:500}
 td.game b{display:block;font-weight:500;white-space:nowrap} .when{display:block;color:var(--muted);font-size:.78rem} .dim{color:var(--muted)}
-.pill{display:inline-block;justify-self:start;font-family:var(--mono);font-size:.72rem;padding:2px 8px;border-radius:999px}
+.pill{display:inline-block;justify-self:start;font-family:var(--mono);font-size:.72rem;padding:2px 8px;border-radius:var(--r-pill)}
 .pill.low{background:var(--accent-soft);color:var(--accent)}
-.chip{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:2px 8px;border-radius:4px}
+.chip{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:2px 10px;border-radius:var(--r-pill)}
 .chip.go{background:var(--accent-soft);color:var(--accent)} .chip.pass{border:1px solid var(--line);color:var(--muted)}
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px 14px;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;min-width:0}
 .card h3{margin:0 0 4px;font-family:var(--disp);font-size:1.05rem} .card p{margin:4px 0;font-size:.88rem;color:var(--muted)} .card .v{font-family:var(--mono);font-size:.95rem}
 .foot{color:var(--muted);font-size:.8rem} a{color:var(--accent)}
 </style>
 <div class="wrap">
 <header><h1>NFL Best Bets Board</h1>
-<p class="sub">Week 9, 2026 · 15 games · results through Week 8 · refreshed 2026-11-05 5:10 PM MST</p></header>
+<p class="sub">Week 9, 2026 · 15 games · results through Week 8 · refreshed 2026-11-05 5:40 PM MST</p></header>
 <section class="verdict"><b>Play small, or pass: the only angle is 6-point teasers</b>
 <span>Spreads, totals and moneylines are priced efficiently, so the board passes on them. The one pattern that has paid in 27 seasons is moving underdogs of +1.5 to +2.5 up 6 points, which wins about 76% of the time against 73.9% needed. That edge is not statistically proven (about 1 standard error), so everything stays Low confidence.</span></section>
 <section><h2>Best plays: two-team teasers (6 points)</h2><div class="plays"><article class="play"><div class="rank">#1</div><div class="legsbox"><div class="leg"><b>SEA -2.5</b><span>ARI @ SEA</span></div><div class="leg"><b>CAR +8.5</b><span>DEN @ CAR</span></div></div><dl><div><dt>Win chance if history holds</dt><dd>56%</dd></div><div><dt>Break-even</dt><dd>54.5%</dd></div><div><dt>Return if history holds</dt><dd class="pos">+3%</dd></div><div><dt>If only half the edge is real</dt><dd class="pos">+2%</dd></div></dl><span class="pill low">Low confidence</span></article></div>
